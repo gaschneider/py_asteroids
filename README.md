@@ -6,8 +6,8 @@ Things to add(suggestions):
 - [X] Implement respawning
 - [X] Implement multiple lives
 - [X] Implement edges on screen to avoid player leaving it
+- [X] Add acceleration to the player movement
 - [ ] Add an explosion effect for the asteroids
-- [ ] Add acceleration to the player movement
 - [ ] Make the objects wrap around the screen instead of disappearing
 - [ ] Add a background image
 - [ ] Create different weapon types

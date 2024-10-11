@@ -1,5 +1,5 @@
 import pygame
-from constants import PLAYER_RADIUS, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN, SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import PLAYER_RADIUS, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN, PLAYER_MAX_ACCELERATION, SCREEN_WIDTH, SCREEN_HEIGHT
 from objects.circleshape import CircleShape
 from objects.shot import Shot
 
@@ -35,9 +35,16 @@ class Player(CircleShape):
     def rotate(self, dt):
         self.rotation += dt * PLAYER_TURN_SPEED
 
-    def move(self, dt):            
+    def move(self, dt):  
+        if (dt < 0 and self.__previous_dt < 0) or (dt >= 0 and self.__previous_dt >= 0):
+            if self.accelaration < PLAYER_MAX_ACCELERATION:
+                self.accelaration = self.accelaration + dt if self.accelaration + dt < PLAYER_MAX_ACCELERATION else PLAYER_MAX_ACCELERATION
+
+        
+        self.__previous_dt = dt
+            
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * dt
+        self.position += forward * PLAYER_SPEED * self.accelaration * dt
         new_x = self.position.x
         new_y = self.position.y
         if new_x < 0:
@@ -67,6 +74,10 @@ class Player(CircleShape):
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot()
+
+        if not keys[pygame.K_w] and not keys[pygame.K_s]:
+            self.__previous_dt = 0
+            self.accelaration = 1
 
     def shoot(self):
         if self.timer > 0:
