@@ -39,6 +39,8 @@ def main():
             keys = pygame.key.get_pressed()
             if keys[pygame.K_RETURN]:
                 game_state.start_again()
+            if keys[pygame.K_ESCAPE]:
+                return
             
         else: 
             for o in updatable:

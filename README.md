@@ -4,7 +4,7 @@
 Things to add(suggestions):
 - [X] Add a scoring system
 - [X] Implement respawning
-- [ ] Implement multiple lives
+- [X] Implement multiple lives
 - [ ] Add an explosion effect for the asteroids
 - [ ] Add acceleration to the player movement
 - [ ] Make the objects wrap around the screen instead of disappearing
