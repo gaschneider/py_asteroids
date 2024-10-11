@@ -7,6 +7,7 @@ from shot import Shot
 class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
+        self.__lives = 1
         self.rotation = 0
         self.timer = 0
 
@@ -51,4 +52,8 @@ class Player(CircleShape):
         shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
         self.timer = PLAYER_SHOOT_COOLDOWN
 
-    
+    def take_damage(self):
+        self.__lives -= 1
+
+    def is_alive(self):
+        return self.__lives > 0
