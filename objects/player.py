@@ -1,7 +1,7 @@
 import pygame
-from constants import PLAYER_RADIUS, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
-from circleshape import CircleShape
-from shot import Shot
+from constants import PLAYER_RADIUS, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN, SCREEN_WIDTH, SCREEN_HEIGHT
+from objects.circleshape import CircleShape
+from objects.shot import Shot
 
 # Player class for game objects
 class Player(CircleShape):
@@ -10,6 +10,8 @@ class Player(CircleShape):
         self.__lives = 3
         self.rotation = 0
         self.timer = 0
+        self.accelaration = 1
+        self.__previous_dt = 0
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -33,9 +35,23 @@ class Player(CircleShape):
     def rotate(self, dt):
         self.rotation += dt * PLAYER_TURN_SPEED
 
-    def move(self, dt):
+    def move(self, dt):            
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         self.position += forward * PLAYER_SPEED * dt
+        new_x = self.position.x
+        new_y = self.position.y
+        if new_x < 0:
+            new_x = 0
+        elif new_x > SCREEN_WIDTH:
+            new_x = SCREEN_WIDTH
+        
+        if new_y < 0:
+            new_y = 0
+        elif new_y > SCREEN_HEIGHT:
+            new_y = SCREEN_HEIGHT
+
+        self.position = pygame.Vector2(new_x, new_y)
+
 
     def update(self, dt):
         keys = pygame.key.get_pressed()

@@ -1,7 +1,7 @@
 
 import pygame
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
-from player import Player
+from objects.player import Player
 
 class GameState():
     def __init__(self, asteroids, shots):

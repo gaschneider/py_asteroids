@@ -1,5 +1,5 @@
 import pygame
-from circleshape import CircleShape
+from objects.circleshape import CircleShape
 from constants import ASTEROID_MIN_RADIUS, SMALL_ASTEROID_POINTS, MEDIUM_ASTEROID_POINTS, LARGE_ASTEROID_POINTS
 import random
 
