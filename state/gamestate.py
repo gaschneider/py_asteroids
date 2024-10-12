@@ -41,14 +41,14 @@ class GameState():
         font = pygame.font.SysFont("Times New Roman", 18)
         if self.is_game_over():
             game_over_message = font.render("Game Over!", 1, "white")
-            screen.blit(game_over_message, (SCREEN_WIDTH / 2 - 80, SCREEN_HEIGHT / 2 - 30))
+            screen.blit(game_over_message, (screen.get_width() // 2 - game_over_message.get_width() // 2, screen.get_height() // 2 - 30))
             your_score_message = font.render(f"Your score was: {self.__current_score}", 1, "white")
-            screen.blit(your_score_message, (SCREEN_WIDTH / 2 - 110, SCREEN_HEIGHT / 2))
+            screen.blit(your_score_message, (screen.get_width() // 2 - your_score_message.get_width() // 2, screen.get_height() // 2))
             best_score_message = font.render("You got the best score!", 1, "white")
             if self.__best_score != self.__current_score:
                 best_score_message = font.render(f"Current best score is: {self.__best_score}", 1, "white")
             
-            screen.blit(best_score_message, (SCREEN_WIDTH / 2 - 135, SCREEN_HEIGHT / 2 + 30))
+            screen.blit(best_score_message, (screen.get_width() // 2 - best_score_message.get_width() // 2, screen.get_height() // 2 + 30))
             return
         
         current_score_message = font.render(f"Score: {self.__current_score}", 1, "white")
