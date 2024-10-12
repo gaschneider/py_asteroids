@@ -12,6 +12,7 @@ from state.gamestate import GameState
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    bg = pygame.image.load("assets/bg.jpg")
     clock = pygame.time.Clock()
     
     updatable = pygame.sprite.Group()
@@ -35,6 +36,9 @@ def main():
             if event.type == pygame.QUIT:
                 return
         
+        screen.fill((0, 0, 0))
+        screen.blit(bg, (0, 0))
+
         if game_state.check_game_over():
             keys = pygame.key.get_pressed()
             if keys[pygame.K_RETURN]:
@@ -47,13 +51,12 @@ def main():
                 o.update(dt)
 
             game_state.check_collisions()
-
-            screen.fill((0, 0, 0))
                 
             for o in drawable:
                 o.draw(screen)
 
         game_state.draw(screen)
+        
 
         pygame.display.flip()
 
