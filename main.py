@@ -6,6 +6,7 @@ from constants import *
 from objects.player import Player
 from objects.asteroid import Asteroid
 from objects.asteroidfield import AsteroidField
+from objects.particle import Particle
 from objects.shot import Shot
 from state.gamestate import GameState
 
@@ -22,6 +23,7 @@ def main():
 
     Shot.containers = (shots, updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
+    Particle.containers = (updatable, drawable)
     AsteroidField.containers = updatable
     AsteroidField()
 

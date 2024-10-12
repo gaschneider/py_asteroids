@@ -1,5 +1,6 @@
 import pygame
 from objects.circleshape import CircleShape
+from objects.explosion import Explosion
 from constants import ASTEROID_MIN_RADIUS, SMALL_ASTEROID_POINTS, MEDIUM_ASTEROID_POINTS, LARGE_ASTEROID_POINTS
 import random
 
@@ -14,6 +15,7 @@ class Asteroid(CircleShape):
         self.position += self.velocity * dt
 
     def split(self):
+        Explosion(self.position.x, self.position.y)
         self.kill()
         
         if self.radius <= ASTEROID_MIN_RADIUS:

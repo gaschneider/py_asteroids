@@ -8,7 +8,7 @@ Things to add(suggestions):
 - [X] Implement edges on screen to avoid player leaving it
 - [X] Add acceleration to the player movement
 - [X] Add a background image
-- [ ] Add an explosion effect for the asteroids
+- [X] Add an explosion effect for the asteroids
 - [ ] Make the objects wrap around the screen instead of disappearing
 - [ ] Create different weapon types
 - [ ] Make the asteroids lumpy instead of perfectly round
