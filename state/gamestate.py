@@ -68,5 +68,5 @@ class GameState():
                 if a.check_collision(s):
                     points_for_hit = a.split()
                     self.add_to_score(points_for_hit)
-                    s.kill()
+                    self.__player.on_shoot_collision(s)
                     break

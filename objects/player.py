@@ -4,6 +4,7 @@ from objects.circleshape import CircleShape
 from objects.shot import Shot
 from objects.defaultweapon import DefaultWeapon
 from objects.shotgunweapon import ShotgunWeapon
+from objects.pierceweapon import PierceWeapon
 
 # Player class for game objects
 class Player(CircleShape):
@@ -85,7 +86,10 @@ class Player(CircleShape):
         if self.__lives == 2:
             self.current_weapon = ShotgunWeapon()
         else:
-            self.current_weapon = DefaultWeapon()
+            self.current_weapon = PierceWeapon()
 
     def is_alive(self):
         return self.__lives > 0
+    
+    def on_shoot_collision(self, shot):
+        self.current_weapon.on_shot_collide(shot)

@@ -15,3 +15,7 @@ class Weapon(pygame.sprite.Sprite):
     def shoot(self, x, y, rotation):
         # sub-classes must override
         pass
+
+    def on_shot_collide(self, shot):
+        # by default all shots will be removed when collided
+        shot.kill()

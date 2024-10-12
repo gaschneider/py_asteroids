@@ -4,8 +4,8 @@ from objects.circleshape import CircleShape
 
 # Shot class for game objects
 class Shot(CircleShape):
-    def __init__(self, x, y, color = "white"):
-        super().__init__(x, y, SHOT_RADIUS)
+    def __init__(self, x, y, color = "white",radius=SHOT_RADIUS):
+        super().__init__(x, y, radius)
         self.color = color
 
     def draw(self, screen):
