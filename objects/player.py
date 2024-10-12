@@ -40,7 +40,7 @@ class Player(CircleShape):
     def move(self, dt):  
         if (dt < 0 and self.__previous_dt < 0) or (dt >= 0 and self.__previous_dt >= 0):
             if self.accelaration < PLAYER_MAX_ACCELERATION:
-                self.accelaration = self.accelaration + dt if self.accelaration + dt < PLAYER_MAX_ACCELERATION else PLAYER_MAX_ACCELERATION
+                self.accelaration = self.accelaration + abs(dt) if self.accelaration + abs(dt) < PLAYER_MAX_ACCELERATION else PLAYER_MAX_ACCELERATION
 
         
         self.__previous_dt = dt
