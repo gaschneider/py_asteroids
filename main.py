@@ -8,6 +8,7 @@ from objects.asteroid import Asteroid
 from objects.asteroidfield import AsteroidField
 from objects.particle import Particle
 from objects.shot import Shot
+from objects.weapon import Weapon
 from state.gamestate import GameState
 
 def main():
@@ -21,6 +22,7 @@ def main():
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
 
+    Weapon.containers = updatable
     Shot.containers = (shots, updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     Particle.containers = (updatable, drawable)
