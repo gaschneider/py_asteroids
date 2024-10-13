@@ -17,6 +17,7 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     bg = pygame.image.load("assets/bg.jpg")
+    bg = pygame.transform.scale(bg, (SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     
     updatable = pygame.sprite.Group()
