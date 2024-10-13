@@ -1,10 +1,7 @@
 import pygame
-from constants import PLAYER_RADIUS, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_MAX_ACCELERATION, SCREEN_WIDTH, SCREEN_HEIGHT, POWER_UP_SPEED_BOOST, POWER_UP_SPEED_TIMER, POWER_UP_SHIELD_TIMER, POWER_UP_SHIELD_RADIUS
+from constants import PLAYER_RADIUS, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_MAX_ACCELERATION, SCREEN_WIDTH, SCREEN_HEIGHT, POWER_UP_SPEED_BOOST, POWER_UP_SPEED_TIMER, UPGRADED_WEAPON_TIMER
 from objects.circleshape import CircleShape
-from objects.asteroid import Asteroid
 from objects.defaultweapon import DefaultWeapon
-from objects.shotgunweapon import ShotgunWeapon
-from objects.pierceweapon import PierceWeapon
 from objects.shield import Shield
 
 # Player class for game objects
@@ -18,6 +15,7 @@ class Player(CircleShape):
         self.current_weapon = DefaultWeapon()
         self.boost_speed_timer = 0
         self.shield = Shield()
+        self.weapon_timer = 0
         
 
     def triangle(self):
@@ -67,8 +65,6 @@ class Player(CircleShape):
             new_y = SCREEN_HEIGHT
 
         self.position = pygame.Vector2(new_x, new_y)
-        self.boost_speed_timer -= dt
-
 
     def update(self, dt):
         keys = pygame.key.get_pressed()
@@ -89,24 +85,24 @@ class Player(CircleShape):
             self.accelaration = 1
 
         self.shield.update(dt)
+        self.boost_speed_timer -= dt
+        self.weapon_timer -= dt
+
+        if self.weapon_timer <= 0 and not isinstance(self.current_weapon, DefaultWeapon):
+            self.current_weapon = DefaultWeapon()
 
     def take_damage(self):
         if self.shield.has_shield:
             return
-        self.update_life(-1)
+        self.__lives -= 1
 
     def add_life(self):
-        self.update_life(1)
+        if self.__lives < 3:
+            self.__lives += 1
 
-    def update_life(self, value):
-        self.__lives += value
-        self.__lives = min(self.__lives, 3)
-        if self.__lives == 3:
-            self.current_weapon = DefaultWeapon()
-        elif self.__lives == 2:
-            self.current_weapon = ShotgunWeapon()
-        elif self.__lives == 1:
-            self.current_weapon = PierceWeapon()
+    def upgrade_weapon(self, weapon):
+        self.current_weapon = weapon
+        self.weapon_timer = UPGRADED_WEAPON_TIMER
 
     def is_alive(self):
         return self.__lives > 0
