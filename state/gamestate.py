@@ -4,7 +4,7 @@ from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from objects.player import Player
 
 class GameState():
-    def __init__(self, asteroids, shots):
+    def __init__(self, asteroids, shots, powerups):
         self.__game_is_over = False
         self.__current_score = 0
         best_score_file = open("state/best_score.txt")
@@ -12,6 +12,7 @@ class GameState():
         self.__player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.__asteroids = asteroids
         self.__shots = shots
+        self.__powerups = powerups
 
     def check_game_over(self):
         if not self.__player.is_alive():
@@ -70,3 +71,7 @@ class GameState():
                     self.add_to_score(points_for_hit)
                     self.__player.on_shoot_collision(s)
                     break
+        
+        for p in self.__powerups:
+            if self.__player.check_collision(p):
+                p.on_activated(self.__player)

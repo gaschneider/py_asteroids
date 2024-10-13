@@ -82,10 +82,17 @@ class Player(CircleShape):
             self.accelaration = 1
 
     def take_damage(self):
-        self.__lives -= 1
+        self.update_life(-1)
+
+    def add_life(self):
+        self.update_life(1)
+
+    def update_life(self, value):
+        self.__lives += value
+        self.__lives = min(self.__lives, 3)
         if self.__lives == 2:
             self.current_weapon = ShotgunWeapon()
-        else:
+        elif self.__lives == 1:
             self.current_weapon = PierceWeapon()
 
     def is_alive(self):

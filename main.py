@@ -9,6 +9,8 @@ from objects.asteroidfield import AsteroidField
 from objects.particle import Particle
 from objects.shot import Shot
 from objects.weapon import Weapon
+from objects.powerup import PowerUp
+from objects.powerupfield import PowerUpField
 from state.gamestate import GameState
 
 def main():
@@ -20,18 +22,22 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    powerups = pygame.sprite.Group()
     shots = pygame.sprite.Group()
 
     Weapon.containers = updatable
     Shot.containers = (shots, updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
+    PowerUp.containers = (powerups, updatable, drawable)
     Particle.containers = (updatable, drawable)
     AsteroidField.containers = updatable
+    PowerUpField.containers = updatable
     AsteroidField()
+    PowerUpField()
 
     Player.containers = (updatable, drawable)
 
-    game_state = GameState(asteroids, shots)
+    game_state = GameState(asteroids, shots, powerups)
 
     dt = 0  
 
