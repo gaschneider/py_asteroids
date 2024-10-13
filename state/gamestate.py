@@ -7,8 +7,12 @@ class GameState():
     def __init__(self, asteroids, shots, powerups):
         self.__game_is_over = False
         self.__current_score = 0
-        best_score_file = open("state/best_score.txt")
-        self.__best_score = int(best_score_file.read())
+        try:
+            best_score_file = open("state/best_score.txt")
+            self.__best_score = int(best_score_file.read())
+        except:
+            self.__best_score = 0
+
         self.__player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         self.__asteroids = asteroids
         self.__shots = shots
@@ -19,7 +23,7 @@ class GameState():
             self.__game_is_over = True
             if self.__current_score > self.__best_score:
                 self.__best_score = self.__current_score
-                best_score_file = open("state/best_score.txt", "w")
+                best_score_file = open("state/best_score.txt", "w+")
                 best_score_file.write(f"{self.__best_score}")
 
         return self.is_game_over()
