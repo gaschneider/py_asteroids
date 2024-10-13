@@ -13,9 +13,6 @@ class PowerUpLife(PowerUp):
         for line in [horiz_line, vert_line]:
             pygame.draw.line(screen, "green", line[0], line[1], 2)
 
-    def update(self, dt):
-        self.position += self.velocity * dt
-
     def on_activated(self, player):
         player.add_life()
         self.kill()

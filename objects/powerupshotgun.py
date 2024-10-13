@@ -12,9 +12,6 @@ class PowerUpShotgun(PowerUp):
         font = pygame.font.SysFont("Times New Roman", 18)
         letter_w = font.render("W", 1, SHOTGUN_WEAPON_SHOOT_COLOR)
         screen.blit(letter_w, (self.position.x - 10, self.position.y - 10))
-        
-    def update(self, dt):
-        self.position += self.velocity * dt
 
     def on_activated(self, player):
         player.upgrade_weapon(ShotgunWeapon())

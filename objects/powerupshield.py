@@ -10,9 +10,6 @@ class PowerUpShield(PowerUp):
         pygame.draw.circle(screen, "white", self.position, POWER_UP_RADIUS, 2)
         pygame.draw.circle(screen, "orange", self.position, POWER_UP_RADIUS / 2, 2)
 
-    def update(self, dt):
-        self.position += self.velocity * dt
-
     def on_activated(self, player):
         player.active_shield()
         self.kill()

@@ -20,4 +20,3 @@ Hope you have a great time reviving this old game with my own perks!
 
 Things to add(suggestions):
 - [ ] Add bombs that can be dropped
-- [ ] Make power ups bounce in screen

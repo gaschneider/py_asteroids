@@ -15,9 +15,6 @@ class PowerUpSpeed(PowerUp):
         for line in [lt1_line, rt1_line, lt2_line, rt2_line]:
             pygame.draw.line(screen, "yellow", line[0], line[1], 2)
 
-    def update(self, dt):
-        self.position += self.velocity * dt
-
     def on_activated(self, player):
         player.boost_speed()
         self.kill()
