@@ -1,8 +1,6 @@
 import pygame
 from objects.powerup import PowerUp
-from objects.explosion import Explosion
 from constants import POWER_UP_RADIUS
-import random
 
 class PowerUpLife(PowerUp):
     def __init__(self, x, y):

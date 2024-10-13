@@ -1,6 +1,8 @@
 import pygame
 import random
 from objects.poweruplife import PowerUpLife
+from objects.powerupshield import PowerUpShield
+from objects.powerupspeed import PowerUpSpeed
 from constants import *
 
 
@@ -31,7 +33,7 @@ class PowerUpField(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.spawn_timer = 0.0
-        self.types = [PowerUpLife, PowerUpLife, PowerUpLife]
+        self.types = [PowerUpLife, PowerUpShield, PowerUpSpeed]
 
     def spawn(self, kind, position, velocity):
         power_up_type = self.types[kind]

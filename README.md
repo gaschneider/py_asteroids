@@ -13,8 +13,8 @@ Things to add(suggestions):
 - [X] Persist best score through different game executions
 - [X] Make the ship have a triangular hit box instead of a circular one
 - [X] Add spawn of power up - gain life
-- [ ] Add a shield power-up
-- [ ] Add a speed power-up
+- [X] Add a shield power-up
+- [X] Add a speed power-up
 - [ ] Add bombs that can be dropped
 - [ ] Make the objects wrap around the screen instead of disappearing
 - [ ] Make the asteroids lumpy instead of perfectly round

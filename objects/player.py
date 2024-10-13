@@ -1,10 +1,11 @@
 import pygame
-from constants import PLAYER_RADIUS, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_MAX_ACCELERATION, SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import PLAYER_RADIUS, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_MAX_ACCELERATION, SCREEN_WIDTH, SCREEN_HEIGHT, POWER_UP_SPEED_BOOST, POWER_UP_SPEED_TIMER, POWER_UP_SHIELD_TIMER, POWER_UP_SHIELD_RADIUS
 from objects.circleshape import CircleShape
-from objects.shot import Shot
+from objects.asteroid import Asteroid
 from objects.defaultweapon import DefaultWeapon
 from objects.shotgunweapon import ShotgunWeapon
 from objects.pierceweapon import PierceWeapon
+from objects.shield import Shield
 
 # Player class for game objects
 class Player(CircleShape):
@@ -15,6 +16,9 @@ class Player(CircleShape):
         self.accelaration = 1
         self.__previous_dt = 0
         self.current_weapon = DefaultWeapon()
+        self.boost_speed_timer = 0
+        self.shield = Shield()
+        
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -26,6 +30,7 @@ class Player(CircleShape):
     
     def draw(self, screen):
         pygame.draw.polygon(screen, self.get_color(), self.triangle(), 2)
+        self.shield.draw(self.position, screen)
 
     def get_color(self):
         if self.__lives == 3:
@@ -46,8 +51,9 @@ class Player(CircleShape):
         
         self.__previous_dt = dt
             
+        boost_speed_acceleration = POWER_UP_SPEED_BOOST if self.boost_speed_timer > 0 else 1
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * self.accelaration * dt
+        self.position += forward * PLAYER_SPEED * self.accelaration * boost_speed_acceleration * dt
         new_x = self.position.x
         new_y = self.position.y
         if new_x < 0:
@@ -61,6 +67,7 @@ class Player(CircleShape):
             new_y = SCREEN_HEIGHT
 
         self.position = pygame.Vector2(new_x, new_y)
+        self.boost_speed_timer -= dt
 
 
     def update(self, dt):
@@ -81,7 +88,11 @@ class Player(CircleShape):
             self.__previous_dt = 0
             self.accelaration = 1
 
+        self.shield.update(dt)
+
     def take_damage(self):
+        if self.shield.has_shield:
+            return
         self.update_life(-1)
 
     def add_life(self):
@@ -90,7 +101,9 @@ class Player(CircleShape):
     def update_life(self, value):
         self.__lives += value
         self.__lives = min(self.__lives, 3)
-        if self.__lives == 2:
+        if self.__lives == 3:
+            self.current_weapon = DefaultWeapon()
+        elif self.__lives == 2:
             self.current_weapon = ShotgunWeapon()
         elif self.__lives == 1:
             self.current_weapon = PierceWeapon()
@@ -98,10 +111,19 @@ class Player(CircleShape):
     def is_alive(self):
         return self.__lives > 0
     
+    def boost_speed(self):
+        self.boost_speed_timer = POWER_UP_SPEED_TIMER
+    
+    def active_shield(self):
+        self.shield.active()
+
     def on_shoot_collision(self, shot):
         self.current_weapon.on_shot_collide(shot)
 
     def check_collision(self, other):
+        if self.shield.check_collision(self.position, other):
+            return True
+
         polygon_points = self.triangle()
         
         # Check collision with each vertex
