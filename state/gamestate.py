@@ -59,7 +59,7 @@ class GameState():
 
     def check_collisions(self):
         for a in self.__asteroids:
-            if a.check_collision(self.__player):
+            if self.__player.check_collision(a):
                 self.__player.take_damage()
                 a.kill()
                 break

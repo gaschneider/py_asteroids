@@ -93,3 +93,35 @@ class Player(CircleShape):
     
     def on_shoot_collision(self, shot):
         self.current_weapon.on_shot_collide(shot)
+
+    def check_collision(self, other):
+        polygon_points = self.triangle()
+        
+        # Check collision with each vertex
+        for point in polygon_points:
+            if other.position.distance_to(point) < other.radius:
+                return True  # Collision with a vertex
+            
+        # Check collision with each edge
+        num_points = len(polygon_points)
+        for i in range(num_points):
+            p1 = polygon_points[i]
+            p2 = polygon_points[(i + 1) % num_points]
+
+            # Vector from p1 to p2
+            edge = p2 - p1
+            edge_length_squared = edge.length_squared()
+            if edge_length_squared == 0:  # p1 and p2 are the same point
+                continue
+
+            # Project circle center onto the edge
+            t = ((other.position - p1).dot(edge)) / edge_length_squared
+            # Clamp t to the segment
+            t = max(0, min(1, t))
+            closest_point = p1 + t * edge
+
+            # Check distance from circle center to the closest point
+            if other.position.distance_to(closest_point) < other.radius:
+                return True  # Collision with an edge
+
+        return False  # No collision detected
